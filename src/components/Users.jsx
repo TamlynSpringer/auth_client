@@ -1,25 +1,39 @@
 import { useState, useEffect } from 'react';
-import axios from '../api/axios';
+import useAxiosPrivate from '../hooks/useAxiosPrivate';
 
 const Users = () => {
   const [ users, setUsers ] = useState();
+  const AxiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
     let isMounted = true;
     const controller = new AbortController();
+
     const getUsers = async () => {
       try {
-        
+        const response = await AxiosPrivate.get('/users', {
+          signal: controller.signal
+        })
+        console.log(response.data);
+        isMounted && setUsers(response.data);
+      } catch (err) {
+        console.error(err);
+        Navigate('/auth', { state: { from: location }, replace: true });
       }
+    }
+    getUsers();
+    return () => {
+      isMounted = false;
+      controller.abort();
     }
   }, [])
   return (
     <article>
-      <h2>User list</h2>
+      <h2>User list:</h2>
       {users?.length
       ? (
         <ul>
-          {users.map((user, i) => <li key={i}{user?.email}></li>)}
+          {users.map((user, i) => <li key={i}>{user?.email} - {user?.role}</li>)}
         </ul>
       ) : <p>No users to display</p>
       
@@ -28,4 +42,4 @@ const Users = () => {
   )
 }
 
-export default Users
+export default Users;

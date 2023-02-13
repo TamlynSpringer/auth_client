@@ -37,7 +37,7 @@ const LoginForm = () => {
         const accessToken = response?.data?.accessToken;
         const roles = response?.data?.roles;
         setAuth({ email, pwd, roles, accessToken });
-        setUser('');
+        setEmail('');
         setPwd('');
         navigate(from, { replace: true });
     } catch (err) {

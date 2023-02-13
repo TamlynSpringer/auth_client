@@ -19,6 +19,7 @@ import Layout from './components/Layout';
 import LinkPage from './components/LinkPage';
 import Unauthorized from './components/Unauthorized';
 import RequireAuth from './components/RequireAuth'
+import Users from './components/Users';
 
 function addToCart(productId) {
     console.log("Add " + productId + " From the App")
@@ -52,6 +53,7 @@ function App() {
                     <Route exact path='register' element={< NewUserForm/>}></Route>
                     <Route exact path='auth' element={< LoginForm/>}></Route>
                     <Route path='links' element={<LinkPage />}></Route>
+                    <Route path='users' element={<Users />}></Route> 
                     <Route path='unauthorized' element={<Unauthorized />}></Route>
                     {/* protected routes */}
                     <Route element={<RequireAuth />}>
